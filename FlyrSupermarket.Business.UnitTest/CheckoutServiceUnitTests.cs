@@ -1,15 +1,18 @@
+using Flyr.Infrastructure.Model;
 using FlyrSupermarket.Business.Impl;
+using FlyrSupermarket.Infrastructure.Repository;
 using Moq;
 
 namespace FlyrSupermarket.Business.UnitTest
 {
     public class CheckoutServiceUnitTests
     {
-        private Mock<Checkout> _checkout;
+        private ICheckoutService _checkout;
+        public Mock<Repository<Product>> _productsRepository;
 
         public CheckoutServiceUnitTests()
         {
-            _checkout = new Mock<Checkout>();
+            _productsRepository = new Mock<Repository<Product>>();
         }
 
         [Fact]
@@ -17,10 +20,9 @@ namespace FlyrSupermarket.Business.UnitTest
         {
             // Arrange
             var expected = 0M;
-            //_checkout.Setup(x => x.Total()).Returns(0M);
 
             // Act
-            var totalPrice = _checkout.Object.Total();
+            var totalPrice = _checkout.Total();
 
             // Assert
             Assert.Equal(expected, totalPrice);
@@ -32,12 +34,19 @@ namespace FlyrSupermarket.Business.UnitTest
             // Arrange
             string itemCode = "GR1";
             decimal expectedPrice = 3.11M;
-            //_checkout.Setup(x => x.Scan(itemCode)).Returns(true);
-            //_checkout.Setup(x => x.Total()).Returns(0M);
+            Product product = new()
+            {
+                Code = itemCode,
+                Name = "Product1",
+                Price = expectedPrice
+            };
+
+            _productsRepository.Setup(p => p.Get(itemCode)).Returns(product);
+            _checkout = new Checkout(_productsRepository.Object);
 
             // Act
-            _checkout.Object.Scan(itemCode);
-            var totalPrice = _checkout.Object.Total();
+            _checkout.Scan(itemCode);
+            var totalPrice = _checkout.Total();
 
             // Assert
             Assert.Equal(expectedPrice, totalPrice);

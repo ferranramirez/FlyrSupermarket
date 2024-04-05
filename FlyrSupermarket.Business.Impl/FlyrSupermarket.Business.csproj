@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Flyr.Infrastructure\FlyrSupermarket.Infrastructure.csproj" />
     <ProjectReference Include="..\FlyrSupermarket.Domain\FlyrSupermarket.Domain.csproj" />
   </ItemGroup>
 
