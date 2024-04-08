@@ -1,12 +1,6 @@
 ﻿using Flyr.Infrastructure.Model;
 using FlyrSupermarket.Business.Interface;
-using FlyrSupermarket.Domain.Model;
 using FlyrSupermarket.Infrastructure.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FlyrSupermarket.Business.Impl
 {
