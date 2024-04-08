@@ -14,8 +14,8 @@ namespace FlyrSupermarket.Infrastructure.Extension
 
             services
                 .AddScoped<IRepository<Product>, Repository<Product>>()
-                .AddDbContext<FlyrContext>(opt => opt.UseInMemoryDatabase("SupermarketDb"))
-                .AddScoped<FlyrContext>();
+                .AddScoped<FlyrContext>()
+                .AddDbContext<FlyrContext>(opt => opt.UseInMemoryDatabase("SupermarketDb"));
 
             return services;
         }

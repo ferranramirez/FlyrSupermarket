@@ -10,7 +10,6 @@ namespace FlySupermarket.Infrastructure.Context
         public FlyrContext(DbContextOptions options) : base(options)
         {
             LoadProducts();
-            SaveChanges();
         }
 
         public void LoadProducts()
@@ -36,6 +35,7 @@ namespace FlySupermarket.Infrastructure.Context
                 Price = 11.23M
             };
             Products.Add(product);
+            SaveChanges();
         }
 
         public List<Product> GetProducts()
