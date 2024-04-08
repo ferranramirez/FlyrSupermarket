@@ -1,21 +1,21 @@
 ﻿using Flyr.Infrastructure.Model;
-using FlyrSupermarket.Business.Interface;
+using FlyrSupermarket.Business.Contract;
 using FlyrSupermarket.Infrastructure.Repository;
 
 namespace FlyrSupermarket.Business.Impl
 {
-    public class Checkout : ICheckoutService
+    public class CheckoutService : ICheckoutService
     {
         public IList<Product> ShoppingCart;
         public readonly IRepository<Product> _productsRepository;
-        public readonly IList<IPricingRule> _pricingRules;
+        private readonly IPricingRuleFactory _pricingRuleFactory;
 
-        public Checkout(IRepository<Product> productsRepository,
-            IList<IPricingRule> pricingRules)
+        public CheckoutService(IRepository<Product> productsRepository,
+            IPricingRuleFactory pricingRuleFactory)
         {
             ShoppingCart = new List<Product>();
             _productsRepository = productsRepository;
-            _pricingRules = pricingRules;
+            _pricingRuleFactory = pricingRuleFactory;
         }
 
         public decimal Total()
@@ -28,7 +28,7 @@ namespace FlyrSupermarket.Business.Impl
                 var quantity = GetQuantityInCart(productCode);
                 var product = _productsRepository.Get(productCode);
 
-                var rule = _pricingRules.FirstOrDefault(r => r.CanApplyRule(productCode));
+                var rule = _pricingRuleFactory.GetStrategy(productCode);
                 if (rule != null)
                     totalPrice += rule.ApplyRule(product, quantity);
                 else

@@ -1,5 +1,5 @@
 ﻿using Flyr.Infrastructure.Model;
-using FlyrSupermarket.Business.Interface;
+using FlyrSupermarket.Business.Contract;
 
 namespace FlyrSupermarket.Business.Impl
 {

@@ -1,6 +1,6 @@
 ﻿using Flyr.Infrastructure.Model;
 
-namespace FlyrSupermarket.Business.Interface
+namespace FlyrSupermarket.Business.Contract
 {
     public interface IPricingRule
     {

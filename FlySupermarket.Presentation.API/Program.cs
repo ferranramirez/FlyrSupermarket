@@ -1,5 +1,5 @@
-using FlySupermarket.Infrastructure.Context;
-using Microsoft.EntityFrameworkCore;
+using FlyrSupermarket.Business.Extension;
+using FlyrSupermarket.Infrastructure.Extension;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,8 +9,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<FlyrContext>(opt => opt.UseInMemoryDatabase("SupermarketDb"));
-builder.Services.AddScoped<FlyrContext>();
+//BusinessModuleExtension.AddServices(builder.Services);
+InfrastructureModuleExtension.AddServices(builder.Services);
 
 var app = builder.Build();
 

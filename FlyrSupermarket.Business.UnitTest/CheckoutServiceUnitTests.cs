@@ -1,23 +1,27 @@
 using Flyr.Infrastructure.Model;
 using FlyrSupermarket.Business.Impl;
-using FlyrSupermarket.Business.Interface;
+using FlyrSupermarket.Business.Contract;
 using FlyrSupermarket.Infrastructure.Repository;
 using Moq;
+using FlyrSupermarket.Business.Impl.PricingRules;
 
 namespace FlyrSupermarket.Business.UnitTest
 {
     public class CheckoutServiceUnitTests
     {
         private ICheckoutService _checkout;
-        public Mock<Repository<Product>> _productsRepository;
-        public IList<IPricingRule> _pricingRules;
-        public Mock<IPricingRule> _pricingRule;
+        private Mock<Repository<Product>> _productsRepository;
+        private IList<IPricingRule> _pricingRules;
+        private Mock<IPricingRule> _pricingRule;
+        private IPricingRuleFactory _pricingRuleFactory;
+
 
         public CheckoutServiceUnitTests()
         {
             _productsRepository = new Mock<Repository<Product>>();
             _pricingRules = new List<IPricingRule>();
             _pricingRule = new Mock<IPricingRule>();
+            _pricingRuleFactory = new PricingRuleFactory(_pricingRules);
         }
 
         [Fact]
@@ -25,7 +29,7 @@ namespace FlyrSupermarket.Business.UnitTest
         {
             // Arrange
             var expected = 0M;
-            _checkout = new Checkout(_productsRepository.Object, _pricingRules);
+            _checkout = new CheckoutService(_productsRepository.Object, _pricingRuleFactory);
 
             // Act
             var totalPrice = _checkout.Total();
@@ -48,7 +52,7 @@ namespace FlyrSupermarket.Business.UnitTest
             };
 
             _productsRepository.Setup(p => p.Get(itemCode)).Returns(product);
-            _checkout = new Checkout(_productsRepository.Object, _pricingRules);
+            _checkout = new CheckoutService(_productsRepository.Object, _pricingRuleFactory);
 
             // Act
             _checkout.Scan(itemCode);
@@ -72,7 +76,7 @@ namespace FlyrSupermarket.Business.UnitTest
             };
 
             _productsRepository.Setup(p => p.Get(itemCode)).Returns(product);
-            _checkout = new Checkout(_productsRepository.Object, _pricingRules);
+            _checkout = new CheckoutService(_productsRepository.Object, _pricingRuleFactory);
 
             // Act
             _checkout.Scan(itemCode);
@@ -102,7 +106,8 @@ namespace FlyrSupermarket.Business.UnitTest
             _pricingRule.Setup(r => r.ApplyRule(product, 2)).Returns(productPrice);
 
             _pricingRules.Add(_pricingRule.Object);
-            _checkout = new Checkout(_productsRepository.Object, _pricingRules);
+            _pricingRuleFactory = new PricingRuleFactory(_pricingRules);
+            _checkout = new CheckoutService(_productsRepository.Object, _pricingRuleFactory);
 
             // Act
             _checkout.Scan(itemCode);
@@ -129,7 +134,8 @@ namespace FlyrSupermarket.Business.UnitTest
             CreateProductWithPricingRule(ref itemCode2, ref productPrice2, ref quantityProduct2, ref priceWithRuleApplied2);
             
             _pricingRules.Add(_pricingRule.Object);
-            _checkout = new Checkout(_productsRepository.Object, _pricingRules);
+            _pricingRuleFactory = new PricingRuleFactory(_pricingRules);
+            _checkout = new CheckoutService(_productsRepository.Object, _pricingRuleFactory);
 
             decimal expectedPrice = productPrice1 + (productPrice2_discounted * quantityProduct2);
 
@@ -163,7 +169,8 @@ namespace FlyrSupermarket.Business.UnitTest
             CreateStandardProduct(ref itemCode3, ref productPrice3, ref quantityProduct3);
 
             _pricingRules.Add(_pricingRule.Object);
-            _checkout = new Checkout(_productsRepository.Object, _pricingRules);
+            _pricingRuleFactory = new PricingRuleFactory(_pricingRules);
+            _checkout = new CheckoutService(_productsRepository.Object, _pricingRuleFactory);
 
             decimal expectedPrice = productPrice1 + (productPrice2_discounted * quantityProduct2) + (productPrice3 * quantityProduct3);
 
