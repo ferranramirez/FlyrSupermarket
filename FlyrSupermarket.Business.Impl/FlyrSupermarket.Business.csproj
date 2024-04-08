@@ -11,8 +11,4 @@
     <ProjectReference Include="..\FlyrSupermarket.Domain\FlyrSupermarket.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Impl\PricingRules\" />
-  </ItemGroup>
-
 </Project>

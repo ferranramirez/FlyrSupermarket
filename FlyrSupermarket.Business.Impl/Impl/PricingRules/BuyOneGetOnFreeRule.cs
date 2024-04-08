@@ -1,7 +1,7 @@
 ﻿using Flyr.Infrastructure.Model;
 using FlyrSupermarket.Business.Interface;
 
-namespace FlyrSupermarket.Business.Impl
+namespace FlyrSupermarket.Business.Impl.PricingRules
 {
     public class BuyOneGetOneFreeRule : IPricingRule
     {
