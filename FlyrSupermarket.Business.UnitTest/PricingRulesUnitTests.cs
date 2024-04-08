@@ -75,5 +75,24 @@ namespace FlyrSupermarket.Business.Impl.Tests.PricingRules
             // Assert
             Assert.Equal(expectedPrice, result);
         }
+
+        [Theory]
+        [InlineData("CF1", 1, 15)]
+        [InlineData("CF1", 2, 30)]
+        [InlineData("CF1", 3, 30)] // Bulk discount applied
+        [InlineData("CF1", 4, 40)] // Bulk discount applied
+        [InlineData("CF1", 5, 50)] // Bulk discount applied
+        public void BulkDiscountRuleWithDynamicDiscount_ValidQuantity_ReturnsCorrectPrice(string productCode, int quantity, decimal expectedPrice)
+        {
+            // Arrange
+            var rule = new BulkDiscountRule();
+            var product = new Product { Code = productCode, Price = 15M }; // Assuming product price is 15M for testing
+
+            // Act
+            var result = rule.ApplyRule(product, quantity);
+
+            // Assert
+            Assert.Equal(expectedPrice, result);
+        }
     }
 }

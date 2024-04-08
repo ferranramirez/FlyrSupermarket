@@ -5,22 +5,23 @@ namespace FlyrSupermarket.Business.Impl
 {
     public class BulkDiscountRule : IPricingRule
     {
-        private readonly string[] ElegibleProductCodes = ["SR1", "CF1"];
-        readonly Dictionary<string, decimal> discountedPrice = new()
+        readonly Dictionary<string, Func<decimal, decimal>> ElegibleProducts = new()
         {
-            { "SR1", 4.50M },
-            { "CF1", 4.50M }
+            { "SR1", originalPrice => 4.50M },
+            { "CF1", originalPrice => originalPrice * 2/3 }
         };
+
         public bool CanApplyRule(string productCode)
-            => ElegibleProductCodes.Contains(productCode);
+            => ElegibleProducts.ContainsKey(productCode);
 
         public decimal ApplyRule(Product product, int quantity)
         {
-            var productPrice = product.Price;
             if (quantity >= 3)
-                discountedPrice.TryGetValue(product.Code, out productPrice);
-
-            return quantity * productPrice;
+            {
+                decimal discountedPrice = ElegibleProducts[product.Code](product.Price);
+                return quantity * discountedPrice;
+            }
+            return quantity * product.Price;
         }
     }
 }
