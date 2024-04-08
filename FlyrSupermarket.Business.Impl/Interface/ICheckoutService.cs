@@ -1,4 +1,4 @@
-﻿namespace FlyrSupermarket.Business.Impl
+﻿namespace FlyrSupermarket.Business.Interface
 {
     public interface ICheckoutService
     {
