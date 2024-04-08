@@ -15,6 +15,8 @@ namespace FlyrSupermarket.Infrastructure.Repository
             DbSet = _context.Set<TEntity>();
         }
 
+        public Repository() { }
+
         public virtual TEntity Get(object id)
         {
             return DbSet.Find(id);
