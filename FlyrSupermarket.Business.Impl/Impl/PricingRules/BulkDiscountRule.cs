@@ -5,10 +5,11 @@ namespace FlyrSupermarket.Business.Impl
 {
     public class BulkDiscountRule : IPricingRule
     {
-        private readonly string[] ElegibleProductCodes = ["SR1"];
+        private readonly string[] ElegibleProductCodes = ["SR1", "CF1"];
         readonly Dictionary<string, decimal> discountedPrice = new()
         {
-            { "SR1", 4.50M }
+            { "SR1", 4.50M },
+            { "CF1", 4.50M }
         };
         public bool CanApplyRule(string productCode)
             => ElegibleProductCodes.Contains(productCode);

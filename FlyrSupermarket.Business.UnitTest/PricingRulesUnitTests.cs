@@ -32,7 +32,42 @@ namespace FlyrSupermarket.Business.Impl.Tests.PricingRules
         {
             // Arrange
             var rule = new BuyOneGetOneFreeRule();
-            var product = new Product { Price = 3.11M };
+            var product = new Product { Price = 3.11M }; // Assuming product price is 3.11 for testing
+
+            // Act
+            var result = rule.ApplyRule(product, quantity);
+
+            // Assert
+            Assert.Equal(expectedPrice, result);
+        }
+
+        [Theory]
+        [InlineData("GR1", false)]
+        [InlineData("SR1", true)]
+        [InlineData("CF1", true)]
+        public void BulkDiscountRule_CanApplyRule_ValidProductCodes_ReturnsCorrectResult(string productCode, bool expectedResult)
+        {
+            // Arrange
+            var rule = new BulkDiscountRule();
+
+            // Act
+            var result = rule.CanApplyRule(productCode);
+
+            // Assert
+            Assert.Equal(expectedResult, result);
+        }
+
+        [Theory]
+        [InlineData("SR1", 1, 5.00)]
+        [InlineData("SR1", 2, 10.00)]
+        [InlineData("SR1", 3, 13.50)] // Bulk discount applied
+        [InlineData("SR1", 4, 18)] // Bulk discount applied
+        [InlineData("SR1", 5, 22.5)] // Bulk discount applied
+        public void BulkDiscountRule_ValidQuantity_ReturnsCorrectPrice(string productCode, int quantity, decimal expectedPrice)
+        {
+            // Arrange
+            var rule = new BulkDiscountRule();
+            var product = new Product { Code = productCode, Price = 5.00M }; // Assuming product price is 5.00 for testing
 
             // Act
             var result = rule.ApplyRule(product, quantity);
