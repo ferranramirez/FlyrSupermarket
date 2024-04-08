@@ -3,21 +3,26 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlyrSupermarket.Presentation.Console", "FlyrSupermarket.Presentation.Console\FlyrSupermarket.Presentation.Console.csproj", "{5CB5943A-AB74-43C5-B0FB-AD39E45D227B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlyrSupermarket.Presentation.Console", "FlyrSupermarket.Presentation.Console\FlyrSupermarket.Presentation.Console.csproj", "{5CB5943A-AB74-43C5-B0FB-AD39E45D227B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlyrSupermarket.Business", "FlyrSupermarket.Business.Impl\FlyrSupermarket.Business.csproj", "{897899BA-18D1-4F49-B8D1-E0AD38A14F95}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlyrSupermarket.Business", "FlyrSupermarket.Business.Impl\FlyrSupermarket.Business.csproj", "{897899BA-18D1-4F49-B8D1-E0AD38A14F95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlyrSupermarket.Domain", "FlyrSupermarket.Domain\FlyrSupermarket.Domain.csproj", "{F3DE6E30-AE79-4ECD-B98B-84D476CDA000}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlyrSupermarket.Domain", "FlyrSupermarket.Domain\FlyrSupermarket.Domain.csproj", "{F3DE6E30-AE79-4ECD-B98B-84D476CDA000}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlySupermarket.Presentation.API", "FlySupermarket.Presentation.API\FlySupermarket.Presentation.API.csproj", "{C58CEC59-112C-4A02-A4FD-22A21643AA84}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlySupermarket.Presentation.API", "FlySupermarket.Presentation.API\FlySupermarket.Presentation.API.csproj", "{C58CEC59-112C-4A02-A4FD-22A21643AA84}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlyrSupermarket.Infrastructure", "Flyr.Infrastructure\FlyrSupermarket.Infrastructure.csproj", "{2CC111FE-804F-4AEC-8D72-1A189B1592AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlyrSupermarket.Infrastructure", "Flyr.Infrastructure\FlyrSupermarket.Infrastructure.csproj", "{2CC111FE-804F-4AEC-8D72-1A189B1592AF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{6FEB289D-5E24-4BD0-B6B3-0FB96E3EC959}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source", "Source", "{83A61DC9-0104-443C-830C-52C14DA83E56}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlyrSupermarket.Business.UnitTest", "FlyrSupermarket.Business.UnitTest\FlyrSupermarket.Business.UnitTest.csproj", "{13C3EFF7-F683-48F9-81A4-1AC7ADC6F9BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlyrSupermarket.Business.UnitTest", "FlyrSupermarket.Business.UnitTest\FlyrSupermarket.Business.UnitTest.csproj", "{13C3EFF7-F683-48F9-81A4-1AC7ADC6F9BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4E06C423-D2D1-4053-9323-6F59A78AF28C}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
