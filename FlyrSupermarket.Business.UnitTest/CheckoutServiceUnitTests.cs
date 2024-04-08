@@ -118,32 +118,16 @@ namespace FlyrSupermarket.Business.UnitTest
         {
             // Arrange
             string itemCode1 = "GR1";
-            decimal productPrice1 = 3.11M;
             int quantityProduct1 = 2;
-            Product product1 = new()
-            {
-                Code = itemCode1,
-                Name = "Product1",
-                Price = productPrice1
-            };
-            _productsRepository.Setup(p => p.Get(itemCode1)).Returns(product1);
-            _pricingRule.Setup(r => r.CanApplyRule(itemCode1)).Returns(true);
-            _pricingRule.Setup(r => r.ApplyRule(product1, quantityProduct1)).Returns(productPrice1);
+            decimal productPrice1 = 3.11M, priceWithRuleApplied1 = 3.11M;
+            CreateProductWithPricingRule(ref itemCode1, ref productPrice1, ref quantityProduct1, ref priceWithRuleApplied1);
 
             string itemCode2 = "SR1";
-            decimal productPrice2 = 5M;
-            decimal productPrice2_discounted = 4.55M;
             int quantityProduct2 = 3;
-            Product product2 = new()
-            {
-                Code = itemCode2,
-                Name = "Product2",
-                Price = productPrice2
-            };
-            _productsRepository.Setup(p => p.Get(itemCode2)).Returns(product2);
-            _pricingRule.Setup(r => r.CanApplyRule(itemCode2)).Returns(true);
-            _pricingRule.Setup(r => r.ApplyRule(product2, quantityProduct2)).Returns(productPrice2_discounted * quantityProduct2);
-
+            decimal productPrice2 = 5M;
+            decimal productPrice2_discounted = 4.55M, priceWithRuleApplied2 = productPrice2_discounted * quantityProduct2;
+            CreateProductWithPricingRule(ref itemCode2, ref productPrice2, ref quantityProduct2, ref priceWithRuleApplied2);
+            
             _pricingRules.Add(_pricingRule.Object);
             _checkout = new Checkout(_productsRepository.Object, _pricingRules);
 
@@ -163,46 +147,20 @@ namespace FlyrSupermarket.Business.UnitTest
         {
             // Arrange
             string itemCode1 = "GR1";
-            decimal productPrice1 = 3.11M;
             int quantityProduct1 = 2;
-            Product product1 = new()
-            {
-                Code = itemCode1,
-                Name = "Product1",
-                Price = productPrice1
-            };
-            _productsRepository.Setup(p => p.Get(itemCode1)).Returns(product1);
-            _pricingRule.Setup(r => r.CanApplyRule(itemCode1)).Returns(true);
-            _pricingRule.Setup(r => r.ApplyRule(product1, quantityProduct1)).Returns(productPrice1);
+            decimal productPrice1 = 3.11M, priceWithRuleApplied1 = 3.11M;
+            CreateProductWithPricingRule(ref itemCode1, ref productPrice1, ref quantityProduct1, ref priceWithRuleApplied1);
 
             string itemCode2 = "SR1";
-            decimal productPrice2 = 5M;
-            decimal productPrice2_discounted = 4.55M;
             int quantityProduct2 = 3;
-            Product product2 = new()
-            {
-                Code = itemCode2,
-                Name = "Product2",
-                Price = productPrice2
-            };
-            _productsRepository.Setup(p => p.Get(itemCode2)).Returns(product2);
-            _pricingRule.Setup(r => r.CanApplyRule(itemCode2)).Returns(true);
-            _pricingRule.Setup(r => r.ApplyRule(product2, quantityProduct2)).Returns(productPrice2_discounted * quantityProduct2);
-
-            _pricingRules.Add(_pricingRule.Object);
-            _checkout = new Checkout(_productsRepository.Object, _pricingRules);
+            decimal productPrice2 = 5M;
+            decimal productPrice2_discounted = 4.55M, priceWithRuleApplied2 = productPrice2_discounted * quantityProduct2;
+            CreateProductWithPricingRule(ref itemCode2, ref productPrice2, ref quantityProduct2, ref priceWithRuleApplied2);
 
             string itemCode3 = "HC1";
             decimal productPrice3 = 10M;
             int quantityProduct3 = 4;
-            Product product3 = new()
-            {
-                Code = itemCode3,
-                Name = "Product3",
-                Price = productPrice3
-            };
-            _productsRepository.Setup(p => p.Get(itemCode3)).Returns(product3);
-            _pricingRule.Setup(r => r.CanApplyRule(itemCode3)).Returns(false);
+            CreateStandardProduct(ref itemCode3, ref productPrice3, ref quantityProduct3);
 
             _pricingRules.Add(_pricingRule.Object);
             _checkout = new Checkout(_productsRepository.Object, _pricingRules);
@@ -217,6 +175,37 @@ namespace FlyrSupermarket.Business.UnitTest
 
             // Assert
             Assert.Equal(expectedPrice, totalPrice);
+        }
+
+        private void CreateProductWithPricingRule(ref string itemCode, ref decimal productPrice, ref int quantityProduct, ref decimal priceWithRuleApplied)
+        {
+            Product product1 = new()
+            {
+                Code = itemCode,
+                Name = "Product_" + itemCode,
+                Price = productPrice
+            };
+            string productCode = itemCode;
+            int productQuantity = quantityProduct;
+
+            _productsRepository.Setup(p => p.Get(productCode)).Returns(product1);
+            _pricingRule.Setup(r => r.CanApplyRule(productCode)).Returns(true);
+            _pricingRule.Setup(r => r.ApplyRule(product1, productQuantity)).Returns(priceWithRuleApplied);
+        }
+
+        private void CreateStandardProduct(ref string itemCode, ref decimal productPrice, ref int quantityProduct)
+        {
+            Product product = new()
+            {
+                Code = itemCode,
+                Name = "Product_" + itemCode,
+                Price = productPrice
+            };
+            string productCode = itemCode;
+            int productQuantity = quantityProduct;
+
+            _productsRepository.Setup(p => p.Get(productCode)).Returns(product);
+            _pricingRule.Setup(r => r.CanApplyRule(productCode)).Returns(false);
         }
     }
 }
